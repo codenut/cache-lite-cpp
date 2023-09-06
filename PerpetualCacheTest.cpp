@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "PerpetualCache.hpp"
+#include "PerpetualCache.h"
 
 using namespace std;
 
@@ -16,12 +16,10 @@ TEST(PerpetualCache, test_set_get_absent)
 {
     PerpetualCache<string, int> cache;
 
-    try
-    {
+    try {
         cache.remove("key");
     }
-    catch (invalid_argument const &err)
-    {
+    catch (invalid_argument const &err) {
         EXPECT_EQ(err.what(), string("Unknown key!"));
     }
 }
@@ -33,12 +31,10 @@ TEST(PerpetualCache, test_remove_present)
     cache.set("key", 2);
     cache.remove("key");
 
-    try
-    {
+    try {
         cache.get("key");
     }
-    catch (invalid_argument const &err)
-    {
+    catch (invalid_argument const &err) {
         EXPECT_EQ(err.what(), string("Unknown key!"));
     }
 }
@@ -61,12 +57,10 @@ TEST(PerpetualCache, test_clear)
     EXPECT_EQ(2, cache.get("key"));
     cache.clear();
 
-    try
-    {
+    try {
         cache.get("key");
     }
-    catch (invalid_argument const &err)
-    {
+    catch (invalid_argument const &err) {
         EXPECT_EQ(err.what(), string("Unknown key!"));
     }
 }
