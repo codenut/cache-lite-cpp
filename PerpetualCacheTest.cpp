@@ -64,3 +64,42 @@ TEST(PerpetualCache, test_clear)
         EXPECT_EQ(err.what(), string("Unknown key!"));
     }
 }
+
+TEST(PerpetualCache, test_pointer_key)
+{
+    PerpetualCache<string, int> cache;
+
+    string key = "key";
+    string *keyPtr = &key;
+
+    cache.set(*keyPtr, 2);
+    EXPECT_EQ(2, cache.get(*keyPtr));
+
+    key = "abc";
+    try {
+        // cache key is still "key" as unordered maps
+        // creates a copy as a key
+        cache.get(*keyPtr);
+    }
+    catch (invalid_argument const &err) {
+        EXPECT_EQ(err.what(), string("Unknown key!"));
+    }
+}
+
+TEST(PerpetualCache, test_pointer_value)
+{
+    PerpetualCache<string, int> cache;
+
+    string key = "key";
+    string *keyPtr = &key;
+
+    int val = 1;
+    int *valPtr = &val;
+
+    cache.set(*keyPtr, *valPtr);
+    EXPECT_EQ(1, cache.get(*keyPtr));
+
+    val = 3;
+    // still 1 because unordered maps stored a copy of the value
+    EXPECT_EQ(1, cache.get(*keyPtr));
+}
