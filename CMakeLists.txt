@@ -20,14 +20,15 @@ enable_testing()
 enable_testing()
 
 add_executable(
-        PerpetualCacheTest
-        PerpetualCacheTest.cpp
-)
-target_link_libraries(
-        PerpetualCacheTest
-        GTest::gtest_main
+    tests
+    PerpetualCacheTest.cpp
+    LruCacheTest.cpp
 )
 
+target_link_libraries(
+    tests
+    GTest::gtest_main
+)
 
 include(GoogleTest)
-gtest_discover_tests(PerpetualCacheTest)
+gtest_discover_tests(tests)
