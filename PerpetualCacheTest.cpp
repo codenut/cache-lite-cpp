@@ -103,3 +103,23 @@ TEST(PerpetualCache, test_pointer_value)
     // still 1 because unordered maps stored a copy of the value
     EXPECT_EQ(1, cache.get(*keyPtr));
 }
+
+TEST(PerpetualCache, test_pointer_type)
+{
+    PerpetualCache<string *, int *> cache;
+
+    string key = "key";
+    string *keyPtr = &key;
+
+    int val = 1;
+    int *valPtr = &val;
+
+    cache.set(keyPtr, valPtr);
+    EXPECT_EQ(1, *cache.get(keyPtr));
+
+    val = 3;
+    EXPECT_EQ(3, *cache.get(keyPtr));
+
+    key = "abc";
+    EXPECT_EQ(3, *cache.get(keyPtr));
+}
