@@ -1,5 +1,5 @@
 #include <unordered_map>
-#include "GenericCache.hpp"
+#include "GenericCache.h"
 
 // TODO: Implement LRU Cache
 
